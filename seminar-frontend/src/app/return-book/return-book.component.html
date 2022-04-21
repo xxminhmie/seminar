@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-4">
+          <!-- FORM  -->
+              <form [formGroup]="findBorrowForm" (ngSubmit)="findBorrowCom()">
+                <div class="form-group row" style="padding-bottom: 16px;">
+                  <label for="borrowId" class="col-sm-3 col-form-label">Borrow ID</label>
+                  <div class="col-sm-9">
+                    <input [(ngModel)]="searchTerm" (keyup)="search($any($event.target).value)" 
+                    type="text" class="form-control"  placeholder="" formControlName="borrowId">
+                  </div>
+                </div>
+                
+                <div class="form-group row" style="padding-bottom: 0px;">
+                  <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                  </div>
+                </div>
+              </form>
+        </div>
+      <div class="col">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th>BorrowID</th>
+                    <th>Book ID</th>
+                    <th>Returned Date</th>
+                    <th>Status</th>
+                    <th>Note</th>
+                    <!-- <th>REFID Check</th> -->
+                </tr>
+            </thead>
+        
+            <tbody>
+                <tr *ngFor = "let detail of details | searchfilter: searchTerm; index as i" >
+                  <td> {{ detail.borrow }}</td>
+                    <td> {{ detail.bookId }} </td>
+                    <td> {{ detail.returnedDate }} </td>
+                    <td> {{ detail.status }} </td>
+                    <td> {{ detail.note }} </td>
+                    <!-- <td contenteditable="true" [textContent]="detail.bookId" (input)="onContentChanged($event)"></td> -->
+                    <!-- <td>
+                      <input type="checkbox" aria-label="Checkbox for following text input">
+                  </td> -->
+                </tr>
+                
+            </tbody>
+        
+        </table>
+
+        <div class="form-group row" style="margin-top: 30px;">
+            <div class="col-sm-3">
+              <form [formGroup]="startInventoryForm" (ngSubmit)="startInventoryCom()">
+                <button type="submit" class="btn btn-primary" style="width: 180px;">Start Inventory</button>
+              </form>
+            </div>
+           
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-primary" style="width: 180px;">Return Books</button>
+              </div>
+        </div>
+        
+
+    </div>
+    </div>
+</div>
