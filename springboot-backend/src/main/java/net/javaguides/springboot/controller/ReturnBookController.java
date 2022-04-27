@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.caen.RFIDLibrary.CAENRFIDException;
 import com.caen.RFIDLibrary.CAENRFIDLogicalSource;
+import com.caen.RFIDLibrary.CAENRFIDLogicalSourceConstants;
 import com.caen.RFIDLibrary.CAENRFIDPort;
 import com.caen.RFIDLibrary.CAENRFIDReader;
+import com.caen.RFIDLibrary.CAENRFIDReaderInfo;
+import com.caen.RFIDLibrary.CAENRFIDTag;
 
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Book;
@@ -101,11 +105,86 @@ public class ReturnBookController {
 		try {
 			myReader.Connect(CAENRFIDPort.CAENRFID_TCP, "192.168.1.2");
 			CAENRFIDLogicalSource mySource = myReader.GetSource("Source_0");
+			
+			
+			// get Reader Infor
+			CAENRFIDReaderInfo info =myReader.GetReaderInfo();
+			
+			String model = info.GetModel();
+			String serialNumber = info.GetSerialNumber();
+			String fwRelease = myReader.GetFirmwareRelease();
+			int power = myReader.GetPower();// tinh theo cong de xac dinh khoang cach
+			
+			// in ra thong tin
+			System.out.println("Model: " + model);
+			System.out.println("SerialNumber: " + serialNumber);
+			System.out.println("fwRelease: " + fwRelease);
+			System.out.println("power: " + power);
+			System.out.println();
+			
+			// thoi gian nhan
+			mySource.SetSession_EPC_C1G2(CAENRFIDLogicalSourceConstants.EPC_C1G2_SESSION_S1);
+			
+			// chua thong tin cua cac tag
+			// chua tat ca thong tin quet tren thiet bi
+			CAENRFIDTag[] myTags = mySource.Inventory();
+			if (myTags.length > 0) {
+				// show list cac thong tin san pham
+				// id san pham la duy nhat: example 48718273123
+				for (int i=0; i<myTags.length; i++) {
+//					list.add(this.hex(myTags[i].GetId()));
+					System.out.println("EPC: " + this.hex(myTags[i].GetId()));
+				}
+			}
+			myReader.Disconnect();
 		}catch(Exception ex) {
-			System.out.print(false);
+			System.out.println(ex);
+			if(myReader != null) {
+				try {
+					myReader.Disconnect();
+				} catch (CAENRFIDException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return list;
 	}
+	
+	/*
+	 * @return tra ve mot chuoi duoc in hoa
+	 */
+	public static String hex(byte[] bytes) {
+		StringBuilder result = new StringBuilder();
+		for(byte aByte : bytes) {
+			result.append(String.format("%02x", aByte));
+		}
+		return result.toString().toUpperCase();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
