@@ -28,25 +28,26 @@ public class BookController {
 	@Autowired
 	private BookRepository bookRepository;
 	
-	// get all employees
+	// get all books
 	@GetMapping("/books")
-	public List<Book> getAllBooks(){
+	public List<Book> getBooksList(){
 		return bookRepository.findAll();
 	}		
 	
-	// create employee rest api
+	// create book rest api
 	@PostMapping("/books")
 	public Book createBook(@RequestBody Book book) {
 		return bookRepository.save(book);
 	}
 	
-	// get employee by id rest api
-//	@GetMapping("/employees/{id}")
-//	public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
-//		Employee employee = employeeRepository.findById(id)
-//				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
-//		return ResponseEntity.ok(employee);
-//	}
+	// get book by id rest api
+	@GetMapping("/books/{id}")
+	public ResponseEntity<Book> getBookById(@PathVariable String id) {
+		System.out.println("getBookById func " + id);
+		Book book = bookRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Book not exist with id :" + id));
+		return ResponseEntity.ok(book);
+	}
 	
 	// update employee rest api
 	

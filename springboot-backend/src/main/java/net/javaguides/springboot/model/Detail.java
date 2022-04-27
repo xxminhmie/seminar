@@ -29,7 +29,7 @@ public class Detail {
 	private String status;
 	
 	@Column(name = "note")
-	private String note;
+	private Boolean note;
 	
 //	@ManyToOne
 //	@JoinColumn(name = "category")
@@ -43,7 +43,7 @@ public class Detail {
 		super();
 	}
 
-	public Detail(String bookId, Date returnedDate, String status, String note, Borrow borrow) {
+	public Detail(String bookId, Date returnedDate, String status, Boolean note, Borrow borrow) {
 		super();
 		this.bookId = bookId;
 		this.returnedDate = returnedDate;
@@ -76,11 +76,11 @@ public class Detail {
 		this.status = status;
 	}
 
-	public String getNote() {
+	public Boolean getNote() {
 		return note;
 	}
 
-	public void setNote(String note) {
+	public void setNote(Boolean note) {
 		this.note = note;
 	}
 

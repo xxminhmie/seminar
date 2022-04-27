@@ -25,21 +25,20 @@ public class Borrow {
 	private long cardId;
 
 	@Column(name = "borrow_date")
-	private java.util.Date borrow_date;
+	private java.util.Date borrowDate;
 	
 //	@OneToMany(mappedBy = "category")
 //	private List<NewsEntity> news = new ArrayList<>();
-	
 	
 	@OneToMany(mappedBy = "borrow")
 	private List<Detail> details = new ArrayList<>();
 	
 
-	public Borrow(long id, long cardId, Date borrow_date) {
+	public Borrow(long id, long cardId, Date borrowDate) {
 		super();
 		this.id = id;
 		this.cardId = cardId;
-		this.borrow_date = borrow_date;
+		this.borrowDate = borrowDate;
 	}
 
 	public Borrow() {
@@ -64,12 +63,12 @@ public class Borrow {
 		this.cardId = cardId;
 	}
 
-	public java.util.Date getBorrow_date() {
-		return borrow_date;
+	public java.util.Date getBorrowDate() {
+		return borrowDate;
 	}
 
-	public void setBorrow_date(java.util.Date borrow_date) {
-		this.borrow_date = borrow_date;
+	public void setBorrow_date(java.util.Date borrowDate) {
+		this.borrowDate = borrowDate;
 	}
 	
 	

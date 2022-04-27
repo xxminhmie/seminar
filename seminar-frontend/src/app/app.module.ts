@@ -8,6 +8,8 @@ import { ReturnBookComponent } from './return-book/return-book.component';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { SearchfilterPipe } from './searchfilter.pipe';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { SearchfilterPipe } from './searchfilter.pipe';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Ng2SearchPipeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

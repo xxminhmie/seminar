@@ -4,5 +4,12 @@ export class Detail {
     returnedDate: string | undefined;
     status : string | undefined;
     note: string | undefined;
-    borrow: [] | undefined;    
+    borrow: Borrow | undefined;    
+}
+
+export class Borrow {
+    id!: number;
+    cardId: string | undefined;
+    borrowDate: string | undefined;
+
 }

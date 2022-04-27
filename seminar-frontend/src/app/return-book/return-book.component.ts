@@ -12,10 +12,6 @@ import { Detail } from '../detail';
 export class ReturnBookComponent implements OnInit {
   details: Detail[] = [];
 
-  searchPost: any;
-  searchTerm!: string;
-
-
   constructor(private book: BookService) { }
 
   findBorrowForm = new FormGroup({
@@ -32,20 +28,59 @@ export class ReturnBookComponent implements OnInit {
     });
   }
 
-  search(post: string){
-     this.details = this.searchPost.filter((val: any) => 
-     val.id.toLowerCase().includes(post))
-  }
-
-  findBorrowCom(){
-    this.book.findBorrowService( this.findBorrowForm.value ).subscribe((result) => console.log( result ),)
+  public findBorrowCom(){ // search button handle
+    // this.book.findBorrowService( this.findBorrowForm.value ).subscribe((result) => console.log( result[0].borrow?.id ))
   }
 
   startInventoryForm = new FormGroup({
     borrowId: new FormControl( '' )
   });
 
+  nameBook:any;
   startInventoryCom(){
-    this.book.findBorrowService( this.findBorrowForm.value ).subscribe((result) => console.log( result ))
+    // this.book.findBorrowService( this.findBorrowForm.value ).subscribe((result) => console.log( result ))
+
+    // this.details = this.details.filter(result => {        
+    //   return result.note="true";  
+    // });
+    this.book.startInventoryService( this.findBorrowForm.value ).subscribe((result) => {
+      result.forEach( (value) => {        
+        if(value.note){
+          console.log("ok");
+          // !value.note;
+          this.details.forEach(element => {
+            if(element.bookId==value.bookId){
+              element.note="true";
+            }
+          });
+          
+          // this.searchCheckBox(value.bookId);
+
+        }
+      });    
+    });
+
+  }
+
+  
+  searchCheckBox(bookIdInput: any):void{
+    this.details  = this.details.filter(result => {        
+      return (result.bookId)?.toString()?.match(bookIdInput);
+      })  
+  }
+
+
+  // search
+  id:any;
+  search(){
+    if(this.id == ""){
+      this.ngOnInit();
+      // console.log("rong");
+      
+    }else{
+      this.details = this.details.filter(result => {        
+        return (result.borrow?.id)?.toString()?.match(this.id);     
+      })
+    }
   }
 }

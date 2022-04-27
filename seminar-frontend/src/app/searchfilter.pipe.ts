@@ -7,10 +7,10 @@ import { Detail } from './detail';
 export class SearchfilterPipe implements PipeTransform {
 
   transform(items: any[], filterQuery: any): any[] {
-    if(!filterQuery){
+    if (!filterQuery) {
       return items;
     }
-    return items.filter((item) => 
+    return items.filter((item) =>
       item.id.toLowerCase().includes(filterQuery.toLowerCase())
     );
   }
