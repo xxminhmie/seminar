@@ -20,9 +20,6 @@ public class Borrow {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@Column(name = "card_id")
-	private long cardId;
 
 	@Column(name = "borrow_date")
 	private java.util.Date borrowDate;
@@ -34,10 +31,9 @@ public class Borrow {
 	private List<Detail> details = new ArrayList<>();
 	
 
-	public Borrow(long id, long cardId, Date borrowDate) {
+	public Borrow(long id, Date borrowDate) {
 		super();
 		this.id = id;
-		this.cardId = cardId;
 		this.borrowDate = borrowDate;
 	}
 
@@ -53,14 +49,6 @@ public class Borrow {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public long getCardId() {
-		return cardId;
-	}
-
-	public void setCardId(long cardId) {
-		this.cardId = cardId;
 	}
 
 	public java.util.Date getBorrowDate() {

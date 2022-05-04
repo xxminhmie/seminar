@@ -39,7 +39,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES ('300EFE2F94D01C02540BE93A','demo4','demo4','demo4','demo4',2020),('300EFE2F94D01C42540BE4F9','demo2','demo2','demo2','demo2',2020),('41003200300036003400300030003100','demo1','demo1','demo1','demo1',2020),('E200001730010136290000DD','demo5','demo5','demo5','demo5',2020),('E20000173001017129000096','demo3','demo3','demo3','demo3',2020);
+INSERT INTO `book` VALUES ('001','Maddie Mortimer','Maps of Our Spectacular Bodies','Genre Fiction','Picador',2022),('002','Tove Ditlevsen','The Copenhagen Trilogy: Childhood; Youth; Dependency','Arts & Literature','Farrar, Straus and Giroux',2021),('003','Julia Armfield','Our Wives Under the Sea','Literature & Fiction','Flatiron Books',2022),('004','mbolo Mbue','How Beautiful We Were: A Novel','Genre Fiction','Random House',2021),('005','Patricia Lockwood','No One Is Talking About This: A Novel','Humor','Riverhead Books',2021);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,32 +69,6 @@ INSERT INTO `borrow` VALUES (10001,'2021-04-04 00:00:00',1001),(10002,'2022-05-0
 UNLOCK TABLES;
 
 --
--- Table structure for table `card`
---
-
-DROP TABLE IF EXISTS `card`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `card` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `end_date` datetime DEFAULT NULL,
-  `note` varchar(255) DEFAULT NULL,
-  `start_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `card`
---
-
-LOCK TABLES `card` WRITE;
-/*!40000 ALTER TABLE `card` DISABLE KEYS */;
-INSERT INTO `card` VALUES (1001,'2023-03-04 00:00:00',NULL,'2022-03-04 00:00:00');
-/*!40000 ALTER TABLE `card` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `detail`
 --
 
@@ -108,9 +82,12 @@ CREATE TABLE `detail` (
   `returned_date` datetime DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `borrow` bigint DEFAULT NULL,
+  `bookdetail` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKmeev3e8t4rosfibo7eqxp1q5r` (`borrow`),
-  CONSTRAINT `FKmeev3e8t4rosfibo7eqxp1q5r` FOREIGN KEY (`borrow`) REFERENCES `borrow` (`id`)
+  KEY `FKol9u0vaatx8sf88joi95gvtj3` (`bookdetail`),
+  CONSTRAINT `FKmeev3e8t4rosfibo7eqxp1q5r` FOREIGN KEY (`borrow`) REFERENCES `borrow` (`id`),
+  CONSTRAINT `FKol9u0vaatx8sf88joi95gvtj3` FOREIGN KEY (`bookdetail`) REFERENCES `book` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -120,8 +97,35 @@ CREATE TABLE `detail` (
 
 LOCK TABLES `detail` WRITE;
 /*!40000 ALTER TABLE `detail` DISABLE KEYS */;
-INSERT INTO `detail` VALUES (1,'300EFE2F94D01C02540BE93A','true','2022-05-04 00:00:00','returned',10001),(2,'300EFE2F94D01C42540BE4F9','true','2022-05-04 00:00:00','returned',10001),(3,'E20000173001017129000096','false','2022-06-05 00:00:00','borrowing',10002),(4,'300EFE2F94D01C42540BE4F9','false','2022-06-05 00:00:00','borrowing',10002);
+INSERT INTO `detail` VALUES (1,'001','true','2022-05-04 00:00:00','returned',10001,'001'),(2,'002','true','2022-05-04 00:00:00','returned',10001,'002'),(3,'001','false','2022-06-05 00:00:00','borrowing',10002,'001'),(4,'003','false','2022-06-05 00:00:00','borrowing',10002,'003');
 /*!40000 ALTER TABLE `detail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tag_read`
+--
+
+DROP TABLE IF EXISTS `tag_read`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tag_read` (
+  `tag_rfid` varchar(255) NOT NULL,
+  `tag_time` datetime DEFAULT NULL,
+  `book` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`tag_rfid`),
+  KEY `FKoxyy6plexpdlhhptf5bu4gjmf` (`book`),
+  CONSTRAINT `FKoxyy6plexpdlhhptf5bu4gjmf` FOREIGN KEY (`book`) REFERENCES `book` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tag_read`
+--
+
+LOCK TABLES `tag_read` WRITE;
+/*!40000 ALTER TABLE `tag_read` DISABLE KEYS */;
+INSERT INTO `tag_read` VALUES ('300F4F573AD001C08369A230',NULL,'004'),('300F4F573AD001C08369A241',NULL,'002'),('300F4F573AD001C08369A245',NULL,'001'),('300F4F573AD001C08369A249',NULL,'003'),('300F4F573AD001C08369A28F',NULL,'005');
+/*!40000 ALTER TABLE `tag_read` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -133,4 +137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-27 10:34:21
+-- Dump completed on 2022-05-05  6:18:49

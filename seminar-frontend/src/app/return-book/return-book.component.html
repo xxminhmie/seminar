@@ -24,7 +24,7 @@
         <thead>
           <tr>
             <th>BorrowID</th>
-            <th>Book ID</th>
+            <th>Book Name</th>
             <th>Returned Date</th>
             <th>Status</th>
             <th>RFID Check</th>
@@ -35,7 +35,7 @@
         <tbody>
           <tr *ngFor="let detail of details">
             <td> {{ detail.borrow?.id }}</td>
-            <td> {{ detail.bookId }} </td>
+            <td> {{ detail.bookdetail?.bookName }} </td>
             <td> {{ detail.returnedDate }} </td>
             <td> {{ detail.status }} </td>
             <!-- <td> {{ detail.note }} </td> -->
@@ -64,7 +64,9 @@
         </div>
 
         <div class="col-sm-3">
-          <button type="submit" class="btn btn-primary" style="width: 180px;">Return Books</button>
+          <form [formGroup]="returnBooksForm" (ngSubmit)="returnBooksCom()">
+            <button type="submit" class="btn btn-primary" style="width: 180px;">Return Books</button>
+          </form>
         </div>
       </div>
 

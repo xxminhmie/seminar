@@ -18,13 +18,20 @@ export class ReturnBookComponent implements OnInit {
     borrowId: new FormControl( '' )
   });
 
+  
+
   ngOnInit(): void {
     this.getReturnBook();
   }
 
   private getReturnBook(){
     this.book.getReturnBookList().subscribe(data => {
-      this.details = data;
+      data.forEach( (value) => {        
+        const temp = value.returnedDate?.slice(0,10);
+        value.returnedDate = temp;
+
+      });
+        this.details = data;
     });
   }
 
@@ -37,12 +44,19 @@ export class ReturnBookComponent implements OnInit {
   });
 
   nameBook:any;
+  count=1
   startInventoryCom(){
     // this.book.findBorrowService( this.findBorrowForm.value ).subscribe((result) => console.log( result ))
 
     // this.details = this.details.filter(result => {        
     //   return result.note="true";  
     // });
+    this.book.startInventoryService( this.findBorrowForm.value ).subscribe((result) => {
+    if(result==null){
+      alert("No tag scanned!")
+    }
+    });
+
     this.book.startInventoryService( this.findBorrowForm.value ).subscribe((result) => {
       result.forEach( (value) => {        
         if(value.note){
@@ -62,9 +76,11 @@ export class ReturnBookComponent implements OnInit {
 
   }
 
+
+
   
   searchCheckBox(bookIdInput: any):void{
-    this.details  = this.details.filter(result => {        
+    this.details  = this.details.filter(result => {     
       return (result.bookId)?.toString()?.match(bookIdInput);
       })  
   }
@@ -83,4 +99,29 @@ export class ReturnBookComponent implements OnInit {
       })
     }
   }
+
+  returnBooksForm = new FormGroup({
+    borrowId: new FormControl( '' )
+  });
+
+  nD: any;
+  public returnBooksCom(){ // return book button handle
+    // console.log( this.findBorrowForm.value );
+    this.book.updateDetailsService( this.findBorrowForm.value ).subscribe((data) => {
+      data.forEach( (value) => {        
+        const temp = value.returnedDate?.slice(0,10);
+        value.returnedDate = temp;
+
+      });
+      this.details = data.filter(result => {        
+        return (result.borrow?.id)?.toString()?.match(this.id);     
+      })
+    }    
+    )
+    
+  }
+
 }
+
+
+

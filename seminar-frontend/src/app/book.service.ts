@@ -34,6 +34,10 @@ export class BookService {
     return this.httpClient.post<Detail[]>("http://localhost:8080/return-book/inventory/"+data.borrowId, data);
   }
 
+  updateDetailsService(data: any): Observable<Detail[]>{
+    return this.httpClient.put<Detail[]>("http://localhost:8080/return-book/return/"+data.borrowId, data);
+  }
+
 
   // getEmployeesList(): Observable<Employee[]>{
   //   return this.httpClient.get<Employee[]>(`${this.baseURL}`);

@@ -21,6 +21,10 @@ public class Detail {
 
 	@Column(name = "book_id")
 	private String bookId;
+	
+	@ManyToOne
+	@JoinColumn(name = "bookdetail")
+    private Book bookdetail;
 
 	@Column(name = "returned_date")
 	private java.util.Date returnedDate;
@@ -43,21 +47,36 @@ public class Detail {
 		super();
 	}
 
-	public Detail(String bookId, Date returnedDate, String status, Boolean note, Borrow borrow) {
+	
+	public Detail(long id, String bookId, Book bookdetail, Date returnedDate, String status, Boolean note,
+			Borrow borrow) {
 		super();
+		this.id = id;
 		this.bookId = bookId;
+		this.bookdetail = bookdetail;
 		this.returnedDate = returnedDate;
 		this.status = status;
 		this.note = note;
 		this.borrow = borrow;
 	}
 
+
+	public Book getBookdetail() {
+		return bookdetail;
+	}
+
+
+	public void setBookdetail(Book bookdetail) {
+		this.bookdetail = bookdetail;
+	}
+
+
 	public String getBookId() {
 		return bookId;
 	}
 
-	public void setBookId(String bookId) {
-		this.bookId = bookId;
+	public void setBookId(String book) {
+		this.bookId = book;
 	}
 
 	public java.util.Date getReturnedDate() {

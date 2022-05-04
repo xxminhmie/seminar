@@ -1,10 +1,14 @@
 package net.javaguides.springboot.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +33,13 @@ public class Book {
 
 	@Column(name = "year")
 	private Integer year;
+	
+	@OneToMany(mappedBy = "book")
+	private List<TagRead> tagReads = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "bookdetail")
+	private List<Detail> details = new ArrayList<>();
+	
 
 	public Book() {
 
