@@ -48,7 +48,6 @@ public class ReturnBookController {
 
 	List<TagRead> scannedTagReadList;
 
-	// get all employees
 	@GetMapping("/return-book")
 	public List<Detail> getAllBooks() {
 		return detailRepository.findAll();
@@ -84,13 +83,13 @@ public class ReturnBookController {
 	}
 
 	@PostMapping("/return-book/inventory/{id}")
-	public ResponseEntity<List<Detail>> getBookIdListByRFID(@PathVariable Long id) {
+	public ResponseEntity<List<Detail>> getBookIdListByRFID(@PathVariable Long id) throws Exception {
 		List<Detail> result = new ArrayList<>();
 
 		List<Detail> detailList = detailRepository.findAll();
 		this.scannedTagReadList = readByRFIDReader();
 
-		if (scannedTagReadList.isEmpty()) {
+		if (scannedTagReadList == null) {
 			return null;
 		}
 
@@ -120,27 +119,34 @@ public class ReturnBookController {
 				if (d.getBookId().equals(tag.getBook().getId())) {
 					d.setNote(true);
 					d.setStatus("returned");
+				    java.util.Date today = new java.util.Date();   
+				    d.setReturnedDate(today);
+
 				}
 			}
-			result.add(d);
-//			Detail updatedDetail = detailRepository.save(d);
-//			result.add(updatedDetail);
+//			result.add(d);
+			Detail updatedDetail = detailRepository.save(d);
+			result.add(updatedDetail);
 		}
 		return ResponseEntity.ok(result);
 	}
 
-	public List<TagRead> readByRFIDReader() {
+	public List<TagRead> readByRFIDReader() throws Exception {
 		List<TagRead> result = new ArrayList<>();
 
 //		Read scanner = new Read();
 //		List<String> tags = scanner.ReadTag();
-
+		
 		List<String> tags = new ArrayList<>();
 		tags.add("300F4F573AD001C08369A249");// scan
 		tags.add("300F4F573AD001C08369A28F");// scan
-
-
-		if (tags != null) {
+		
+		if (tags == null) {
+//			scanner = null;
+			System.gc();
+			System.out.println("Tags is null, no tag was scanned!");
+			return null;
+		} else {
 			List<TagRead> listTagRead = tagReadRepository.findAll();
 			for (TagRead tag : listTagRead) {
 				for (String rfidString : tags) {
@@ -150,8 +156,11 @@ public class ReturnBookController {
 
 				}
 			}
+			return result;
 		}
-		return result;
+
+
+		
 	}
 
 }

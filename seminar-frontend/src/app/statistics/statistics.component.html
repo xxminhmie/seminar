@@ -1,1 +1,67 @@
-<p>statistics works!</p>
+
+<h2>
+    Statistical Return
+</h2>
+<div class="container row">
+    <div class="col-3">
+        <label for=""> Started Date: </label>
+        <form class="row row-cols-sm-auto">
+            <div class="col-3">
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="startedDate" [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker">
+                <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+              </div>
+            </div>
+          </form>
+    </div>
+
+    <div class="col-3">
+        <label for=""> End Date: </label>
+        <form class="row row-cols-sm-auto">
+            <div class="col-3">
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="endDate" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker">
+                <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+              </div>
+            </div>
+          </form>
+    </div>
+    <div class="col-2" style="margin-top: 24px;">
+        <form [formGroup]="submitForm" (ngSubmit)="submitCom()">
+            <button type="submit" class="btn btn-primary" style="width: 140px;">Submit</button>
+          </form>
+    </div>
+    <!-- <div class="col-2" style="margin-top: 24px;">
+        <form [formGroup]="exportForm" (ngSubmit)="exportCom()">
+            <button type="submit" class="btn btn-primary" style="width: 140px;">Export</button>
+          </form>
+    </div> -->
+</div>
+
+<div class="container" style="margin: 20px;">
+    <div class="col-12">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Book Title</th>
+              <th>Login Name</th>
+              <th>Borrowing Date</th>
+              <th>Due Date</th>
+              <th>Returned Date</th>
+            </tr>
+          </thead>
+
+          <tbody>
+                <tr *ngFor = "let statistic of statistics">
+                    <td> {{ statistic.bookName }} </td>
+                    <td> {{ statistic.loginName }} </td>
+                    <td> {{ statistic.borrowDate }} </td>
+                    <td> {{ statistic.dueDate }} </td>
+                    <td> {{ statistic.returnedDate }} </td>
+                </tr>
+          </tbody>
+  
+        </table>
+</div>

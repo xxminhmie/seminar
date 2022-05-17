@@ -1,4 +1,5 @@
 import { Book } from "./book";
+import { User } from "./user";
 
 export class Detail {
     id!: string;
@@ -14,5 +15,7 @@ export class Borrow {
     id!: number;
     cardId: string | undefined;
     borrowDate: string | undefined;
+    dueDate: string | undefined;
+    user: User | undefined;
 
 }

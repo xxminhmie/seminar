@@ -9,6 +9,9 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { SearchfilterPipe } from './searchfilter.pipe';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -19,6 +22,7 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
     ReturnBookComponent,
     StatisticsComponent,
     SearchfilterPipe,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +30,8 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
     HttpClientModule,
     ReactiveFormsModule,
     Ng2SearchPipeModule,
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

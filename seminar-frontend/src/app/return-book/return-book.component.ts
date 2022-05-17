@@ -26,12 +26,13 @@ export class ReturnBookComponent implements OnInit {
 
   private getReturnBook(){
     this.book.getReturnBookList().subscribe(data => {
-      data.forEach( (value) => {        
-        const temp = value.returnedDate?.slice(0,10);
-        value.returnedDate = temp;
-
+      data.forEach( (value) => {   
+        if(value.returnedDate!=null) {
+          const temp = value.returnedDate?.slice(0,10);
+          value.returnedDate = temp;
+          this.details = data;
+        }  
       });
-        this.details = data;
     });
   }
 
