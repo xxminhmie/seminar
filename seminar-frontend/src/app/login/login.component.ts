@@ -26,9 +26,23 @@ export class LoginComponent implements OnInit {
 
   s:string | undefined;
  login(){
+  if(this.loginForm.value.username==null){
+    alert("Please type username date!");
+    return;
+  }
+  if(this.loginForm.value.password==null){
+    alert("Please type password date!");
+    return;
+  }
     this.s = this.loginForm.value.username + "," + this.loginForm.value.password;
-    this.loginSer.check( this.s ).subscribe((result) => console.log( result ))
-
+    this.loginSer.check( this.s ).subscribe((result) => {
+      console.log( result )
+      if (result==true){
+        this.navigate();
+      }else{
+        alert("Username or password is not valid!")
+      }
+    })
   }
 
   navigate(){
